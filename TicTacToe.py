@@ -1,3 +1,5 @@
+given_game_board = 'O   X   O'
+
 MOVE_MAPPING = {
     0: 'Top Left', 1: 'Top Center', 2: 'Top Right',
     3: 'Middle Left', 4: 'Middle Center', 5: 'Middle Right',
@@ -137,7 +139,7 @@ class TicTacToe:
         return best_move, best_val
 
 if __name__ == "__main__":
-    game = TicTacToe('O   X   O')
+    game = TicTacToe(given_game_board)
     game.display_board()
     best_move, best_val = game.find_best_move()
 
