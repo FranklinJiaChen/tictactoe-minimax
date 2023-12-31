@@ -1,4 +1,5 @@
-given_game_board = 'O   X   O'
+# given_game_board = 'O   X   O' #example board
+given_game_board = '         ' #input board to be analyze X's next move
 
 MOVE_MAPPING = {
     0: 'Top Left', 1: 'Top Center', 2: 'Top Right',
@@ -13,6 +14,7 @@ MINIMAX_VALUE_MAPPING = {
 }
 
 class TicTacToe:
+    minimax_counter = 0
     def __init__(self, board_str: str = None) -> None:
         """
         Initialize a Tic-Tac-Toe game.
@@ -86,6 +88,7 @@ class TicTacToe:
         Returns:
         - The minimax value for the current state of the board.
         """
+        TicTacToe.minimax_counter += 1
 
         # Base cases
         if self.check_winner('X'):
@@ -123,6 +126,7 @@ class TicTacToe:
         - The index of the best move on the board.
         - The minimax value of the best move given.
         """
+        TicTacToe.minimax_counter = 0
         best_val = float('-inf')
         best_move = -1
 
@@ -145,3 +149,4 @@ if __name__ == "__main__":
 
     print(f"A best move for 'X' is: {MOVE_MAPPING[best_move]}.")
     print(f"With optimal play, this position leads to {MINIMAX_VALUE_MAPPING[best_val]}")
+    print(f"Positions analyzed: {TicTacToe.minimax_counter}")
