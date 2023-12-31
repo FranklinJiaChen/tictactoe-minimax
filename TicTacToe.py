@@ -1,10 +1,14 @@
 # given_game_board = 'O   X   O' #example board
 given_game_board = '         ' #input board to be analyze X's next move
 
+
+
+
 MOVE_MAPPING = {
     0: 'Top Left', 1: 'Top Center', 2: 'Top Right',
     3: 'Middle Left', 4: 'Middle Center', 5: 'Middle Right',
-    6: 'Bottom Left', 7: 'Bottom Center', 8: 'Bottom Right'
+    6: 'Bottom Left', 7: 'Bottom Center', 8: 'Bottom Right',
+    -1: 'N/A. No available moves'
 }
 
 MINIMAX_VALUE_MAPPING = {
@@ -123,7 +127,7 @@ class TicTacToe:
         In case of multiple equally optimal moves, the tiebreaker is the lower index.
 
         Returns:
-        - The index of the best move on the board.
+        - The index of the best move on the board. (-1 if no possible moves)
         - The minimax value of the best move given.
         """
         TicTacToe.minimax_counter = 0
@@ -139,6 +143,13 @@ class TicTacToe:
                 if move_val > best_val:
                     best_val = move_val
                     best_move = i
+        if best_move == -1:
+            if self.check_winner('X'):
+                return best_move, 1
+            elif self.check_winner('O'):
+                return best_move, -1
+            elif self.check_draw():
+                return best_move, 0
 
         return best_move, best_val
 
