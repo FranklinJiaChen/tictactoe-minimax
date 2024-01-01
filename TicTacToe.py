@@ -1,9 +1,6 @@
 # given_game_board = 'O   X   O' #example board
 given_game_board = '         ' #input board to be analyze X's next move
 
-
-
-
 MOVE_MAPPING = {
     0: 'Top Left', 1: 'Top Center', 2: 'Top Right',
     3: 'Middle Left', 4: 'Middle Center', 5: 'Middle Right',
@@ -81,13 +78,16 @@ class TicTacToe:
         """
         return ' ' not in self.board
 
-    def minimax(self, depth: int, maximizing_player: bool) -> int:
+    def minimax(self, depth: int, maximizing_player: bool, alpha: float = float('-inf'), beta: float = float('inf')) -> int:
         """
-        Implement the minimax algorithm to find the optimal move. 'X' is the maximizing player.
+        Implement the minimax algorithm with alpha-beta pruning to find the optimal move.
+        'X' is the maximizing player.
 
         Parameters:
         - depth: Current depth in the game tree (recursive calls).
         - maximizing_player: True if the current player is trying to maximize the score ('X'), False otherwise ('O').
+        - alpha: The current best score that the maximizing player is assured of.
+        - beta: The current best score that the minimizing player is assured of.
 
         Returns:
         - The minimax value for the current state of the board.
@@ -107,18 +107,24 @@ class TicTacToe:
             for i in range(9):
                 if self.board[i] == ' ':
                     self.board[i] = 'X'
-                    eval = self.minimax(depth + 1, False)
+                    eval = self.minimax(depth + 1, False, alpha, beta)
                     self.board[i] = ' '
                     max_eval = max(max_eval, eval)
+                    alpha = max(alpha, eval)
+                    if beta <= alpha:
+                        break  # Alpha-beta pruning
             return max_eval
         else:
             min_eval = float('inf')
             for i in range(9):
                 if self.board[i] == ' ':
                     self.board[i] = 'O'
-                    eval = self.minimax(depth + 1, True)
+                    eval = self.minimax(depth + 1, True, alpha, beta)
                     self.board[i] = ' '
                     min_eval = min(min_eval, eval)
+                    beta = min(beta, eval)
+                    if beta <= alpha:
+                        break  # Alpha-beta pruning
             return min_eval
 
     def find_best_move(self) -> int:
