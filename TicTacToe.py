@@ -1,4 +1,4 @@
-# given_game_board = 'O   X   O' #example board
+#given_game_board = 'O   X   O' #example board
 given_game_board = '         ' #input board to be analyze X's next move
 
 MOVE_MAPPING = {
@@ -9,9 +9,9 @@ MOVE_MAPPING = {
 }
 
 MINIMAX_VALUE_MAPPING = {
-    1: 'X winning',
+    **{i: 'X winning' for i in range(1, 11)},
     0: 'a draw',
-    -1: 'O winning'
+    **{i: 'O winning' for i in range(-1, -11, -1)}
 }
 
 class TicTacToe:
@@ -96,9 +96,9 @@ class TicTacToe:
 
         # Base cases
         if self.check_winner('X'):
-            return 1
+            return 10-depth
         elif self.check_winner('O'):
-            return -1
+            return -10+depth
         elif self.check_draw():
             return 0
 
