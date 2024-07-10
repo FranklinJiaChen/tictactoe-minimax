@@ -113,6 +113,8 @@ class TicTacToe:
                     alpha = max(alpha, eval)
                     if beta <= alpha:
                         break  # Alpha-beta pruning
+                    if max_eval == 1:
+                        break # best possible evaluation
             return max_eval
         else:
             min_eval = float('inf')
@@ -125,6 +127,8 @@ class TicTacToe:
                     beta = min(beta, eval)
                     if beta <= alpha:
                         break  # Alpha-beta pruning
+                    if min_eval == -1:
+                        break # best possible evaluation
             return min_eval
 
     def find_best_move(self) -> int:
